@@ -21,6 +21,7 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
 import android.media.MediaRecorder;
+import android.media.CamcorderProfile;
 import android.os.Build;
 import android.util.Size;
 import android.view.Display;
@@ -445,19 +446,30 @@ public class CameraPlugin implements MethodCallHandler {
       }
       mediaRecorder = new MediaRecorder();
 
+      CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_720P);
+
       if (enableAudio) mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
       mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
       mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
       if (enableAudio) mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
       mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
       //mediaRecorder.setVideoEncodingBitRate(1024 * 1000);
-      mediaRecorder.setVideoEncodingBitRate(40000000);
+      //mediaRecorder.setVideoEncodingBitRate(3000000);
+     // mediaRecorder.setVideoEncodingBitRate(2000000);
+
+
+     mediaRecorder.setVideoFrameRate(profile.videoFrameRate);
+     mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
+        mediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
+    
+      if (enableAudio) mediaRecorder.setAudioSamplingRate(profile.audioSampleRate);
+      if (enableAudio) mediaRecorder.setAudioEncodingBitRate(profile.audioBitRate);
 
       
 
-      if (enableAudio) mediaRecorder.setAudioSamplingRate(16000);
-      mediaRecorder.setVideoFrameRate(27);
-      mediaRecorder.setVideoSize(videoSize.getWidth(), videoSize.getHeight());
+      // if (enableAudio) mediaRecorder.setAudioSamplingRate(44100);
+      // if (enableAudio) mediaRecorder.setAudioEncodingBitRate(96000);
+
       mediaRecorder.setOutputFile(outputFilePath);
       mediaRecorder.setOrientationHint(getMediaOrientation());
 
