@@ -446,9 +446,11 @@ public class CameraPlugin implements MethodCallHandler {
       }
       mediaRecorder = new MediaRecorder();
 
-      CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_720P);
+      
+      CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_480P);
 
-      if (enableAudio) mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+      if (enableAudio) mediaRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
+
       mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
       mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
       if (enableAudio) mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
@@ -460,7 +462,7 @@ public class CameraPlugin implements MethodCallHandler {
 
      mediaRecorder.setVideoFrameRate(profile.videoFrameRate);
      mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
-        mediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
+        mediaRecorder.setVideoEncodingBitRate(5000000);
     
       if (enableAudio) mediaRecorder.setAudioSamplingRate(profile.audioSampleRate);
       if (enableAudio) mediaRecorder.setAudioEncodingBitRate(profile.audioBitRate);
