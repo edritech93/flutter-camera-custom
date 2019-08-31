@@ -454,6 +454,11 @@ public class CameraPlugin implements MethodCallHandler {
       mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
       mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
       if (enableAudio) mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+
+      //setting audio channels to stereo
+      if (enableAudio) mediaRecorder.setAudioChannels(2);
+
+      
       mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
       //mediaRecorder.setVideoEncodingBitRate(1024 * 1000);
       //mediaRecorder.setVideoEncodingBitRate(3000000);
